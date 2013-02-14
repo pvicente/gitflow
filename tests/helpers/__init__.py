@@ -121,7 +121,7 @@ def remote_clone_from_fixture(fixture_name, copy_config=True):
          Copy the `gitflow` parts of the original repo into the clone.
 
     The repo is accesible via the self.repo attribute inside the
-    tests, the remote (clond) repo via `self.remote`.
+    tests, the remote (cloned) repo via `self.remote`.
     """
     def _outer(f):
         @wraps(f)
