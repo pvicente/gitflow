@@ -638,6 +638,13 @@ class TestGitFlowCommandFinish(TestCase):
         self.assertRaises(Usage,
                           gitflow.finish, 'feature', 'even', False, False, False, False, None)
 
+    @remote_clone_from_fixture('sample_repo')
+    def test_finish_with_fetch(self):
+        gitflow = GitFlow(self.repo).init()
+        gitflow.create('feature', 'wow-feature', base=None, fetch=False)
+        gitflow.finish('feature', 'wow-feature', True, False, False, False, None)
+
+
 
 class TestGitFlowCommandTrack(TestCase):
 
