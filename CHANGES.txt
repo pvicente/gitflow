@@ -1,0 +1,10 @@
+v0.5.1
+-----------
+
+* Fix: Using ``finish`` with option ``-F`` crashed.
+
+
+v0.5.0
+-----------
+
+* First public release
