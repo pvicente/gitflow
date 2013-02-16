@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'git-flow'
-copyright = u'2010-2011, Vincent Driessen; 2012 Hartmut Goebel'
+copyright = u'2010-2011, Vincent Driessen; 2012-2013 Hartmut Goebel'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
