@@ -16,3 +16,5 @@
 /.tox
 /nosetests.xml
 /docs/_build
+/docs/html
+/docs/man

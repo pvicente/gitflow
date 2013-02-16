@@ -16,7 +16,7 @@ git-flow
 #
 # This file is part of `gitflow`.
 # Copyright (c) 2010-2011 Vincent Driessen
-# Copyright (c) 2012 Hartmut Goebel
+# Copyright (c) 2012-2013 Hartmut Goebel
 # Distributed under a BSD-like license. For full terms see the file LICENSE.txt
 #
 
@@ -28,7 +28,7 @@ from gitflow.exceptions import (GitflowError, AlreadyInitialized,
                                 NotInitialized, BranchTypeExistsError,
                                 BaseNotOnBranch)
 
-__copyright__ = "2010-2011 Vincent Driessen; 2012 Hartmut Goebel"
+__copyright__ = "2010-2011 Vincent Driessen; 2012-2013 Hartmut Goebel"
 __license__ = "BSD"
 
 def die(*texts):

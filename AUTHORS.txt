@@ -8,3 +8,4 @@ Authors are (ordered by first commit date):
 - Randy Merrill
 - Sebastian Thiel
 - Peter van der Does
+- Tomas Brambora
