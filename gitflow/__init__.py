@@ -12,7 +12,7 @@ repository operations for Vincent Driessen's branching model.
 VERSION = (0, 5, 1)
 
 __version__ = ".".join(map(str, VERSION[0:3])) + "".join(VERSION[3:])
-__author__ = "Hartmut Goebelm, Vincent Driessen"
+__author__ = "Hartmut Goebel, Vincent Driessen"
 __contact__ = "h.goebel@crazy-compilers.com, vincent@datafox.nl"
 __homepage__ = "http://github.com/htgoebel/gitflow/"
 __docformat__ = "restructuredtext"
