@@ -1,7 +1,7 @@
 #
 # This file is part of `gitflow`.
 # Copyright (c) 2010-2011 Vincent Driessen
-# Copyright (c) 2012 Hartmut Goebel
+# Copyright (c) 2012-2013 Hartmut Goebel
 # Distributed under a BSD-like license. For full terms see the file LICENSE.txt
 #
 
@@ -25,7 +25,7 @@ from tests.helpers import (copy_from_fixture, remote_clone_from_fixture,
                            fake_commit, all_commits, set_gnupg_home)
 from tests.helpers.factory import create_sandbox, create_git_repo
 
-__copyright__ = "2010-2011 Vincent Driessen; 2012 Hartmut Goebel"
+__copyright__ = "2010-2011 Vincent Driessen; 2012-2013 Hartmut Goebel"
 __license__ = "BSD"
 
 class TestGitFlowBasics(TestCase):
@@ -637,6 +637,58 @@ class TestGitFlowCommandFinish(TestCase):
         # do not resolve, but finish again
         self.assertRaises(Usage,
                           gitflow.finish, 'feature', 'even', False, False, False, False, None)
+
+    @staticmethod
+    def __get_fetch_head(repo, ref_path='FETCH_HEAD'):
+        """
+        This is an uggly work-around to a bug in GitPython 0.3.2 RC1
+        which is unable to parse FETCH_HEAD reference files.
+        """
+        fp = open(os.path.join(repo.git_dir, ref_path))
+        value = fp.read().split(None, 1)[0]
+        fp.close()
+        return repo.commit(value)
+
+    @remote_clone_from_fixture('sample_repo')
+    def test_finish_fetch_does_not_change_repo(self):
+        remote = GitFlow(self.remote).init()
+        rc0 = remote.develop().commit
+        gitflow = GitFlow(self.repo).init()
+        c0 = gitflow.develop().commit
+        self.assertEqual(rc0, c0)
+
+        gitflow.create('feature', 'wow-feature', base=None, fetch=False)
+        c1 = gitflow.develop().commit
+        self.assertEqual(c0, c1)
+
+        gitflow.finish('feature', 'wow-feature', True, False, False, False, None)
+        c2 = gitflow.develop().commit
+        self.assertEqual(c0, c2)
+
+        fh = self.__get_fetch_head(self.repo)
+        self.assertEqual(fh, c0)
+
+    @remote_clone_from_fixture('sample_repo')
+    def test_finish_fetch_fetches_from_remote(self):
+        remote = GitFlow(self.remote).init()
+        rc0 = remote.develop().commit
+        gitflow = GitFlow(self.repo).init()
+        c0 = gitflow.develop().commit
+        self.assertEqual(rc0, c0)
+
+        gitflow.create('feature', 'wow-feature', base=None, fetch=False)
+        c1 = gitflow.develop().commit
+        self.assertEqual(c0, c1)
+
+        fake_commit(gitflow.repo, 'Yet another commit')
+
+        gitflow.finish('feature', 'wow-feature', True, False, False, False, None)
+        c2 = gitflow.develop().commit
+        self.assertNotEqual(c0, c2)
+
+        fh = self.__get_fetch_head(self.repo)
+        self.assertEqual(fh, c0)
+        self.assertNotEqual(fh, c2)
 
 
 class TestGitFlowCommandTrack(TestCase):

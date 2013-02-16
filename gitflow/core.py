@@ -1,7 +1,7 @@
 #
 # This file is part of `gitflow`.
 # Copyright (c) 2010-2011 Vincent Driessen
-# Copyright (c) 2012 Hartmut Goebel
+# Copyright (c) 2012-2013 Hartmut Goebel
 # Distributed under a BSD-like license. For full terms see the file LICENSE.txt
 #
 
@@ -24,7 +24,7 @@ from gitflow.exceptions import (NotInitialized, BranchExistsError,
                                 NoSuchRemoteError, NoSuchBranchError,
                                 Usage, BadObjectError)
 
-__copyright__ = "2010-2011 Vincent Driessen; 2012 Hartmut Goebel"
+__copyright__ = "2010-2011 Vincent Driessen; 2012-2013 Hartmut Goebel"
 __license__ = "BSD"
 
 def datetime_to_timestamp(d):
@@ -418,7 +418,7 @@ class GitFlow(object):
         remote_branch = self.origin_name(branch)
         if remote_branch in self.branch_names(remote=True):
             if fetch:
-                repo.fetch(remote_branch)
+                self.origin().fetch(branch)
             self.require_branches_equal(branch, remote_branch)
 
     @requires_repo

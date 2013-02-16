@@ -1,17 +1,17 @@
 #
 # This file is part of `gitflow`.
 # Copyright (c) 2010-2011 Vincent Driessen
-# Copyright (c) 2012 Hartmut Goebel
+# Copyright (c) 2012-2013 Hartmut Goebel
 # Distributed under a BSD-like license. For full terms see the file LICENSE.txt
 #
 
 all: cover
 
 doc:
-	cd docs && make html
+	make -C docs html man
 
 clean-docs:
-	cd docs && make clean
+	make -C docs clean
 
 clean-files:
 	find . -name '*.py[co]' -exec rm {} \;

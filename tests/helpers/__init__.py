@@ -1,7 +1,7 @@
 #
 # This file is part of `gitflow`.
 # Copyright (c) 2010-2011 Vincent Driessen
-# Copyright (c) 2012 Hartmut Goebel
+# Copyright (c) 2012-2013 Hartmut Goebel
 # Distributed under a BSD-like license. For full terms see the file LICENSE.txt
 #
 
@@ -13,7 +13,7 @@ from functools import wraps
 from unittest2 import TestCase
 from git import Repo
 
-__copyright__ = "2010-2011 Vincent Driessen; 2012 Hartmut Goebel"
+__copyright__ = "2010-2011 Vincent Driessen; 2012-2013 Hartmut Goebel"
 __license__ = "BSD"
 
 def sandboxed(f):
@@ -121,7 +121,7 @@ def remote_clone_from_fixture(fixture_name, copy_config=True):
          Copy the `gitflow` parts of the original repo into the clone.
 
     The repo is accesible via the self.repo attribute inside the
-    tests, the remote (clond) repo via `self.remote`.
+    tests, the remote (cloned) repo via `self.remote`.
     """
     def _outer(f):
         @wraps(f)
