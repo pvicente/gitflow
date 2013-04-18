@@ -1,5 +1,6 @@
-GitPython==0.3.0-beta2
+GitPython==0.3.2.RC1
+argparse==1.2.1
 async==0.6.1
-gitdb==0.5.1
-nose==0.11.4
-nose-achievements==0.2pre
+gitdb==0.5.4
+smmap==0.8.2
+wsgiref==0.1.2

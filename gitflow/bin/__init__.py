@@ -648,6 +648,47 @@ class SupportCommand(GitFlowCommand):
         print "- You are now on branch", branch
         print ""
 
+class IssuesCommand(GitFlowCommand):
+    @classmethod
+    def register_parser(cls, parent):
+        p = parent.add_parser('issue', help='Manage issue tracking with git flow')
+        sub = p.add_subparsers(title='Actions')
+        cls.register_init(sub)
+        cls.register_start(sub)
+    
+   
+    @staticmethod
+    def run_list(args):
+        from gitflow.issues import IssuesManager
+        for i in IssuesManager.AVAILABLE:
+            print i.__class__.__name__
+    
+    @classmethod
+    def register_init(cls, parent):
+        p = parent.add_parser('init', help='Initialize issue manager')
+        p.add_argument('-f', '--force', action='store_true', help='Force reinitialization of the issue manager')
+        p.add_argument('-l', '--list',  action='store_true', help='List Suported Issues Manager')
+        p.set_defaults(func=cls.run_init)
+    
+    @staticmethod
+    def run_init(args):
+        if args.list:
+            from gitflow.issues import IssuesManager
+            j = 1
+            for cls in itersubclasses(IssuesManager):
+                print '%s. %s\t%s'%(j,cls.__name__, cls.description())
+                j+=1
+            return
+        
+    @classmethod
+    def register_start(cls, parent):
+        p = parent.add_parser('start', help='Start a new issue')
+        p.set_defaults(func=cls.run_start)
+        p.add_argument('number', action=NotEmpty, help='Issue number')
+    
+    @staticmethod
+    def run_start(args):
+        pass
 
 def main():
     parser = argparse.ArgumentParser(prog='git flow')
