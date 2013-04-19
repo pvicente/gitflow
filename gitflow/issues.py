@@ -106,3 +106,4 @@ class GitHubIssuesManager(IssuesManager):
 if __name__ == '__main__':
     g = GitHubIssuesManager()
     print g.project, g.organization
+
