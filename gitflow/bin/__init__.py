@@ -27,6 +27,7 @@ from gitflow.util import itersubclasses
 from gitflow.exceptions import (GitflowError, AlreadyInitialized,
                                 NotInitialized, BranchTypeExistsError,
                                 BaseNotOnBranch)
+from gitflow.issues import IssuesManager
 
 __copyright__ = "2010-2011 Vincent Driessen; 2012-2013 Hartmut Goebel"
 __license__ = "BSD"
@@ -656,30 +657,26 @@ class IssuesCommand(GitFlowCommand):
         cls.register_init(sub)
         cls.register_start(sub)
     
-   
-    @staticmethod
-    def run_list(args):
-        from gitflow.issues import IssuesManager
-        for i in IssuesManager.AVAILABLE:
-            print i.__class__.__name__
-    
     @classmethod
     def register_init(cls, parent):
         p = parent.add_parser('init', help='Initialize issue manager')
         p.add_argument('-f', '--force', action='store_true', help='Force reinitialization of the issue manager')
-        p.add_argument('-l', '--list',  action='store_true', help='List Suported Issues Manager')
+        p.add_argument('-l', '--list',  action='store_true', help='List supported Issues Manager')
         p.set_defaults(func=cls.run_init)
     
     @staticmethod
     def run_init(args):
+        manager = IssuesManager()
         if args.list:
-            from gitflow.issues import IssuesManager
-            j = 1
-            for cls in itersubclasses(IssuesManager):
-                print '%s. %s\t%s'%(j,cls.__name__, cls.description())
-                j+=1
+            print manager
             return
         
+        if not args.force and manager.configured:
+            print 'Issues manager already configured. Use --force to reinit'
+            return
+        
+        manager.configure()
+    
     @classmethod
     def register_start(cls, parent):
         p = parent.add_parser('start', help='Start a new issue')
